@@ -21,7 +21,7 @@ fi
 
 echo "Done!"
 
-BASEURL=$(echo "$PAGE" | grep 'images/' | awk -F "'" '{print $2}')
+BASEURL=$(echo "$PAGE" | grep 'images/' | awk -F "'" '{printf $2}')
 COUNTPAGE=$(echo "$PAGE" | grep -m1 'window.params.thumbs')
 COUNT=$(echo ${COUNTPAGE: -20} | sed 's/\(.*\)\([0-9]\{3\}\)\(.*\)/\2/')
 NAME=$(echo "$1" | sed 's/\(.*manga\|.*doujinshi\)\/\(.*\)\/read/\2/')
