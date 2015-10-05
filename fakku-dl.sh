@@ -24,7 +24,7 @@ echo "Done!"
 BASEURL="$(echo "$PAGE" | grep 'images/' | awk -F "\'" '{printf $2}')"
 COUNTPAGE="$(echo "$PAGE" | grep -m1 'window.params.thumbs')"
 COUNT=$(echo ${COUNTPAGE: -16} | sed 's/[^0-9]//g')
-NAME=$(echo "$1" | sed -e 's/\/read$//;s/^.*\///')
+NAME=$(echo "$1" | sed -e 's/\/read[/]*$//;s/^.*\///')
 
 
 if [ "$BASEURL" == "" ]
