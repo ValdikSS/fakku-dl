@@ -46,5 +46,5 @@ cd "$NAME"
 for i in $(seq -f '%03.f' $COUNT)
 do
   echo "Downloading $i"
-  wget -q "$BASEURL""$i"".jpg"
+  wget -q "$BASEURL""$i"".jpg" || echo "  Error."
 done
