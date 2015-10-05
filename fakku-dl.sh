@@ -12,7 +12,7 @@ echo
 echo "Link: $1"
 echo "Downloading page..."
 
-PAGE=$(wget -O -  -q "$1")
+PAGE="$(wget -O - -q "$1")"
 if [ $? -ne 0 ]
 then
   echo "Error: can't download page!"
@@ -42,8 +42,8 @@ echo "Found $COUNT images"
 mkdir "$NAME"
 cd "$NAME"
 
-for i in `seq -f '%03.f' $COUNT`
+for i in $(seq -f '%03.f' $COUNT)
 do
   echo "Downloading $i"
-  wget -q "$BASEURL""$i".jpg
+  wget -q "$BASEURL""$i"".jpg"
 done
