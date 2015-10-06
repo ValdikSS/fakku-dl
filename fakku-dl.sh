@@ -12,7 +12,7 @@ echo
 echo "Link: $1"
 echo "Downloading page..."
 
-PAGE=$(wget -O -  -q "$1")
+PAGE="$(wget -O - -q "$1")"
 if [ $? -ne 0 ]
 then
   echo "Error: can't download page!"
@@ -21,10 +21,11 @@ fi
 
 echo "Done!"
 
-BASEURL=$(echo "$PAGE" | grep 'images/' | awk -F "'" '{print $2}')
-COUNTPAGE=$(echo "$PAGE" | grep -m1 'window.params.thumbs')
-COUNT=$(echo ${COUNTPAGE: -20} | sed 's/\(.*\)\([0-9]\{3\}\)\(.*\)/\2/')
-NAME=$(echo "$1" | sed 's/\(.*manga\|.*doujinshi\)\/\(.*\)\/read/\2/')
+BASEURL="$(echo "$PAGE" | grep 'images/' | awk -F "\'" '{printf $2}')"
+COUNTPAGE="$(echo "$PAGE" | grep -m1 'window.params.thumbs')"
+COUNT=$(echo ${COUNTPAGE: -16} | sed 's/[^0-9]//g')
+NAME=$(echo "$1" | sed -e 's/\/read[/]*$//;s/^.*\///')
+
 
 if [ "$BASEURL" == "" ]
 then
@@ -42,8 +43,8 @@ echo "Found $COUNT images"
 mkdir "$NAME"
 cd "$NAME"
 
-for i in `seq -f '%03.f' $COUNT`
+for i in $(seq -f '%03.f' $COUNT)
 do
   echo "Downloading $i"
-  wget -q "$BASEURL""$i".jpg
+  wget -q "$BASEURL""$i"".jpg" || echo "  Error."
 done
